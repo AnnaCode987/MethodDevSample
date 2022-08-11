@@ -1,0 +1,43 @@
+﻿
+@using Syncfusion.Blazor.Popups
+@using Web.ViewModels
+
+<Dialog @ref="@dialog" IsModal="true" Width="320px" ShowCloseIcon="false" Visible="false" CssClass="e-info-dialog">
+
+    <DialogTemplates>
+        <Header>
+            <div class="e-info-icon"><span class="fad fa-info-circle"></span><div class="e-info-header">@localizer["about-this-report"]</div></div>
+        </Header>
+        <Content>
+            @if (this.ViewModel.Items != null)
+            {
+                @foreach (var item in this.ViewModel.Items)
+                {
+                    @if (item.Order == 1)
+                    {
+                        <div class="e-info-name">@item.Value</div>
+                    }
+                    else
+                    {
+                        <div class="e-info-item">
+                            @if (item.ShowLabel)
+                            {
+                                <span class="e-info-label">@item.Label</span>
+                            }
+
+                            <span class="e-info-value">&nbsp;&nbsp;@item.Value</span>
+                        </div>
+                    }
+                }
+            }
+        </Content>
+        <FooterTemplate>
+            <button class="e-info-button" @onclick="@(() => this.ViewModel.HideAsync(this.dialog))">CLOSE</button>
+        </FooterTemplate>
+    </DialogTemplates>
+</Dialog>
+@code {
+    [Parameter]
+    public NavItemViewModel NavItem { get; set; } = new NavItemViewModel();
+
+}
